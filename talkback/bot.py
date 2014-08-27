@@ -36,6 +36,10 @@ class TalkBackBot(irc.IRCClient):
 
     def privmsg(self, user, channel, msg):
         """Called when the bot receives a message."""
+
+        log.msg("privmsg (user), (channel), (msg) "
+                .format(user=user, channel=channel, msg=msg,))
+        
         sendTo = None
         prefix = ''
         senderNick = user.split('!', 1)[0]
