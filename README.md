@@ -10,3 +10,6 @@ the bot with a django site and its orm. also, users (on irc by their hostmask),
 commands, and which users get to run what commands, with an object and permission
 system inspired by openacs.
 
+Additionally I want to use code coverage tools to see what code has/has not been
+run in tests, and add tests for previously not covered code.
+
