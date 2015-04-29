@@ -1,3 +1,5 @@
+import collections
+
 from twisted.internet import protocol
 from twisted.python import log
 from twisted.words.protocols import irc
@@ -21,6 +23,9 @@ class TalkBackBot(irc.IRCClient):
     def signedOn(self):
         """Called when bot has successfully signed on to server."""
         log.msg("Signed on")
+
+        self.channelUsers = collections.defaultdict(set)
+        self.nickPrefixes = ''.join(prefix for prefix, _ in self.supported.getFeature('PREFIX').itervalues())
 
         if self.nickname != self.factory.nickname:
             log.msg('Your nickname was already occupied, actual nickname is '
@@ -68,6 +73,36 @@ class TalkBackBot(irc.IRCClient):
                 "sent message to {receiver}, triggered by {sender}:\n\t{quote}"
                 .format(receiver=sendTo, sender=senderNick, quote=quote)
             )
+
+    def irc_RPL_NAMREPLY(self, prefix, params):
+        channel = params[2].lower()
+        self.channelUsers[channel].update(nick.lstrip(self.nickPrefixes) for nick in params[3].split(' '))
+
+    def userJoined(self, user, channel):
+        nick, _, host = user.partition('!')
+        self.channelUsers[channel.lower()].add(nick)
+
+        self.msg(channel, ', '.join(self.channelUsers[channel.lower()]))
+
+    def userLeft(self, user, channel):
+        nick, _, host = user.partition('!')
+        self.channelUsers[channel.lower()].discard(nick)
+
+    def userQuit(self, user, quitMessage):
+        nick, _, host = user.partition('!')
+        
+        for users in self.channelUsers.itervalues():
+            users.discard(nick)
+
+    def userKicked(self, kickee, channel, kicker, message):
+        nick, _, host = kickee.partition('!')
+        self.channelUsers[channel.lower()].discard(nick)
+
+    def userRenamed(self, oldname, newname):
+        for users in self.channelUsers.itervalues():
+            if oldname in users:
+                users.discard(oldname)
+                users.add(newname)
 
 class TalkBackBotFactory(protocol.ClientFactory):
     protocol = TalkBackBot
