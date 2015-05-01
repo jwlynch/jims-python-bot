@@ -45,7 +45,6 @@ class TalkBackBot(irc.IRCClient):
 
         log.msg("privmsg ( {user}, {channel}, {msg} )"
                 .format(user=user, channel=channel, msg=msg,))
-        
         sendTo = None
         prefix = ''
         senderNick = user.split('!', 1)[0]
@@ -82,8 +81,6 @@ class TalkBackBot(irc.IRCClient):
     def userJoined(self, user, channel):
         nick, _, host = user.partition('!')
         self.channelUsers[channel.lower()].add(nick)
-
-        self.msg(channel, ', '.join(self.channelUsers[channel.lower()]))
 
     def userLeft(self, user, channel):
         nick, _, host = user.partition('!')
