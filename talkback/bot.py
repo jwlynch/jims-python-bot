@@ -10,6 +10,7 @@ class TalkBackBot(irc.IRCClient):
         """Called when a connection is made."""
         self.nickname = self.factory.nickname
         self.realname = self.factory.realname
+        self.prefixCmdTriggerChar = self.factory.prefixCmdTriggerChar
         irc.IRCClient.connectionMade(self)
         log.msg("connectionMade")
 
@@ -109,10 +110,11 @@ class TalkBackBotFactory(protocol.ClientFactory):
 
     # instantiate the TalkBackBot IRC protocol
 
-    def __init__(self, channel, nickname, realname, quotes, triggers):
+    def __init__(self, channel, nickname, realname, quotes, triggers, prefixCmdTriggerChar):
         """Initialize the bot factory with our settings."""
         self.channel = channel
         self.nickname = nickname
         self.realname = realname
         self.quotes = quotes
         self.triggers = triggers
+        self.prefixCmdTriggerChar = prefixCmdTriggerChar
