@@ -60,19 +60,19 @@ class TalkBackBot(irc.IRCClient):
         else:
             log.msg("privmsg: else")
             msg = msg.lower()
-            for trigger in self.factory.triggers:
-                if msg == trigger:
-                    sendTo = channel
-                    prefix = senderNick + ': '
-                    break
+            sendTo = channel
 
         if sendTo:
-            quote = self.factory.quotes.pick()
-            self.msg(sendTo, prefix + quote)
-            log.msg(
-                "sent message to {receiver}, triggered by {sender}:\n\t{quote}"
-                .format(receiver=sendTo, sender=senderNick, quote=quote)
-            )
+            if msg.startswith(self.prefixCmdTriggerChar):
+                cmd = msg[1:]
+                self.msg(sendTo, "it's a command " + cmd)
+                cmdList = cmd.split()
+                args = []
+
+                if len(cmdList) > 1:
+                    args = cmdList[1:]
+
+                self.msg(sendTo, 'cmd ' + cmdList[0] + ", args " + ', '.join(args))
 
     def irc_RPL_NAMREPLY(self, prefix, params):
         channel = params[2].lower()
