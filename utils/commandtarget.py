@@ -12,7 +12,7 @@ class CommandTarget(object):
           
         self._itsNextTarget = aCommandTarget
         
-    def doCommand(command):
+    def doCommand(self, command):
         # pass the buck
         
         if self._itsNextTarget is not None:
