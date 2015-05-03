@@ -1,2 +1,6 @@
 *~
 *.pyc
+twistd.pid
+twisted/plugins/dropin.cache
+.coverage
+_trial_temp/
