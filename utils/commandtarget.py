@@ -23,8 +23,8 @@ class CommandTarget(object):
 
     def searchCommand(self, cmdString):
         result = None
-        if not _itsNextTarget is None:
-            result = _itsNextTarget.searchCommand(cmdString)
+        if not self._itsNextTarget is None:
+            result = self._itsNextTarget.searchCommand(cmdString)
         
         return result
 
