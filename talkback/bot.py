@@ -48,9 +48,11 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
 
         log.msg("privmsg ( {user}, {channel}, {msg} )"
                 .format(user=user, channel=channel, msg=msg,))
+
         sendTo = None
         prefix = ''
         senderNick = user.split('!', 1)[0]
+        msg = msg.strip()
         if channel == self.nickname:
             log.msg("privmsg: channel == self.nickname")
             # /MSG back
