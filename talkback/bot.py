@@ -78,6 +78,12 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
                 if len(cmdList) > 1:
                     args = cmdList[1:]
 
+                cmdNum = self.searchCommand(cmdList[0])
+
+                if cmdNum is not None:
+                    result = self.doCommand(cmdNum, args)
+                else:
+                    self.msg(sendTo, "command " + cmdList[0] + " not found")
 
     def irc_RPL_NAMREPLY(self, prefix, params):
         channel = params[2].lower()
