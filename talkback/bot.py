@@ -5,7 +5,6 @@ from twisted.python import log
 from twisted.words.protocols import irc
 
 from utils import commandtarget
-from stack import Stack
 
 class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
 
