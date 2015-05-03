@@ -9,6 +9,9 @@ from stack import Stack
 
 class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
 
+    def __init__(self):
+        super(TalkBackBot, self).__init__()
+
     def connectionMade(self):
         """Called when a connection is made."""
         self.nickname = self.factory.nickname
