@@ -12,12 +12,12 @@ class CommandTarget(object):
           
         self._itsNextTarget = aCommandTarget
 
-    def doCommand(self, command):
+    def doCommand(self, command, args):
         result = None
         # pass the buck
 
         if self._itsNextTarget is not None:
-            result = self._itsNextTarget.doCommand(command)
+            result = self._itsNextTarget.doCommand(command, args)
 
         return result
 
@@ -28,12 +28,12 @@ class CommandTarget(object):
         
         return result
 
-    def doCommandStr(self, cmdString):
+    def doCommandStr(self, cmdString, args):
         result = None
         cmd = self.searchCommand(cmdString)
         
         if cmd is not None:
-            result = self.doCommand(cmd)
+            result = self.doCommand(cmd, args)
 
         return result
 
