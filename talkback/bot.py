@@ -73,14 +73,12 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
         if sendTo:
             if msg.startswith(self.prefixCmdTriggerChar):
                 cmd = msg[1:]
-                self.msg(sendTo, "it's a command " + cmd)
                 cmdList = cmd.split()
                 args = []
 
                 if len(cmdList) > 1:
                     args = cmdList[1:]
 
-                self.msg(sendTo, 'cmd ' + cmdList[0] + ", args " + ', '.join(args))
 
     def irc_RPL_NAMREPLY(self, prefix, params):
         channel = params[2].lower()
