@@ -2,6 +2,7 @@
 
 class CommandTarget(object):
     def __init__(self):
+        super(CommandTarget, self).__init__()
         self._itsNextTarget = None
     
     def imYourNextTarget(self, aCommandTarget):
