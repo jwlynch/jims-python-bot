@@ -8,6 +8,40 @@ from utils import commandtarget
 
 class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
 
+    # overrides from CommandTarget
+
+    cmdQuote = 1
+    commands = {"quote": cmdQuote}
+
+    # return 0 on success
+    def doCommand(self, command, args):
+        result = None
+        sendTo = None
+
+        if command == self.cmdQuote:
+            if "sendTo" in args:
+                sendTo = args["sendTo"]
+                self.msg(sendTo, "command quote")
+                result = 0 # success
+        # elif test for other commands this class instance responds to
+        else:
+            result = super(TalkBackBot, self).doCommand(command, args)
+
+        return result
+
+    def searchCommand(self, cmdString):
+        result = None
+        for key in self.commands:
+            if key == cmdString:
+                result = self.commands[cmdString]
+
+        if result == None:
+            result = super(TalkBackBot, self).searchCommand(cmdString)
+
+        return result
+
+    # overrides from IRCClient
+
     def __init__(self):
         super(TalkBackBot, self).__init__()
 
