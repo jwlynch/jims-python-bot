@@ -107,10 +107,11 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
             if msg.startswith(self.prefixCmdTriggerChar):
                 cmd = msg[1:]
                 cmdList = cmd.split()
-                args = []
+                args = {"sendTo": sendTo}
 
                 if len(cmdList) > 1:
-                    args = cmdList[1:]
+                    # what to do?
+                    pass
 
                 cmdNum = self.searchCommand(cmdList[0])
 
