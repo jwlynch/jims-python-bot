@@ -29,17 +29,6 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
 
         return result
 
-    def searchCommand(self, cmdString):
-        result = None
-        for key in self.commands:
-            if key == cmdString:
-                result = self.commands[cmdString]
-
-        if result == None:
-            result = super(TalkBackBot, self).searchCommand(cmdString)
-
-        return result
-
     # overrides from IRCClient
 
     def __init__(self):

@@ -27,6 +27,9 @@ class CommandTarget(object):
 #
 # then, the suggested code for searchCommand will pick them up. use the symbolic names in doCommsnd().
 #
+# another possibility, if there are no commands in this class, set commands to empty hash:
+#
+# commands = {}
 
     def doCommand(self, command, args):
         result = None
@@ -56,25 +59,17 @@ class CommandTarget(object):
 
     def searchCommand(self, cmdString):
         result = None
-        if not self._itsNextTarget is None:
+
+        # first search commands from this class
+        for key in self.commands:
+            if key == cmdString:
+                result = self.commands[cmdString]
+
+        # then try next target, if there is one
+        if result is None and not self._itsNextTarget is None:
             result = self._itsNextTarget.searchCommand(cmdString)
         
         return result
-
-#
-# searchCommand suggestion for override
-#
-# def searchCommand(self, cmdString)
-#     result = None
-#     for key in self.commands:
-#         if key == cmdString:
-#             result = self.commands[cmdString]
-#
-#     if result == None:
-#         result = super(FooClass, self).searchCommand(cmdString)
-#
-#     return result
-#
 
     def doCommandStr(self, cmdString, args):
         result = None
