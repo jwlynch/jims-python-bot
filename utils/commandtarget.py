@@ -6,7 +6,7 @@ class CommandTarget(object):
         self._itsNextTarget = None
     
     def imYourNextTarget(self, aCommandTarget):
-        if not aComnmandTarget.isinstance(CommandTarget): 
+        if not isinstance(aCommandTarget, CommandTarget): 
             raise Exception(
                 "The object you're trying to send is not the correct type. Did you forget to also inherit from CommandTarget?"
             )
