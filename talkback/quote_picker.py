@@ -10,7 +10,7 @@ class QuotePicker(commandtarget.CommandTarget):
     commands = {"quote": cmdQuote}
 
     # return 0 on success
-    def doCommand(self, command, args):
+    def doCommand(self, command, *args, **kwargs):
         result = None
         sendTo = None
         protocol = None
@@ -29,7 +29,7 @@ class QuotePicker(commandtarget.CommandTarget):
                 pass # didn't get sendTo from args
         # elif test for other commands this class instance responds to
         else:
-            result = super(TalkBackBot, self).doCommand(command, args)
+            result = super(TalkBackBot, self).doCommand(command, *args, **kwargs)
 
         return result
 
