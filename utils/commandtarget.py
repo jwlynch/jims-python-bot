@@ -31,19 +31,19 @@ class CommandTarget(object):
 #
 # commands = {}
 
-    def doCommand(self, command, args):
+    def doCommand(self, command, *args, **kwargs):
         result = None
         # pass the buck
 
         if self._itsNextTarget is not None:
-            result = self._itsNextTarget.doCommand(command, args)
+            result = self._itsNextTarget.doCommand(command, *args, **kwargs)
 
         return result
 
 #
 # doCommand suggestion for override
 #
-# def doCommand(self, command, args)
+# def doCommand(self, command, *args, **kwargs)
 #     result = None
 #
 #     (extract from args whatever might be needed for running the command)
@@ -54,7 +54,7 @@ class CommandTarget(object):
 #         (run cmdBar, set result or raise excepton)
 #     else:
 #         # pass buck to superclass
-#         result = super(FooClass, self).doCommand(command, args)
+#         result = super(FooClass, self).doCommand(command, *args, **kwargs)
 #
 
     def searchCommand(self, cmdString):
@@ -71,12 +71,12 @@ class CommandTarget(object):
         
         return result
 
-    def doCommandStr(self, cmdString, args):
+    def doCommandStr(self, cmdString, *args, **kwargs):
         result = None
         cmd = self.searchCommand(cmdString)
         
         if cmd is not None:
-            result = self.doCommand(cmd, args)
+            result = self.doCommand(cmd, *args, **kwargs)
 
         return result
 
