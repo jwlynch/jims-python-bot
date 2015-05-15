@@ -36,6 +36,8 @@ class QuotePicker(commandtarget.CommandTarget):
     # methods for this class (QuotePicker)
 
     def __init__(self, quotes_filename):
+        super(QuotePicker, self).__init__()
+
         """Initialize our QuotePicker class"""
         with open(quotes_filename) as quotes_file:
             self.quotes = quotes_file.readlines()
