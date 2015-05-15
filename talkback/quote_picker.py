@@ -21,7 +21,8 @@ class QuotePicker(commandtarget.CommandTarget):
 
                 if "protocol" in kwargs:
                     protocol = kwargs["protocol"]
-                    protocol.msg(sendTo, "command quote")
+                    prefix = kwargs["prefix"]
+                    protocol.msg(sendTo, prefix + self.pick())
                     result = 0 # success
                 else:
                     pass # didn't get protocol from args
