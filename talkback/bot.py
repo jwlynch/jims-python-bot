@@ -80,16 +80,15 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
             if msg.startswith(self.prefixCmdTriggerChar):
                 cmd = msg[1:]
                 cmdList = cmd.split()
-                args = {"sendTo": sendTo, "protocol": self}
+                args = []
 
                 if len(cmdList) > 1:
-                    # what to do?
-                    pass
+                    args = cmdList[1:]
 
                 cmdNum = self.searchCommand(cmdList[0])
 
                 if cmdNum is not None:
-                    result = self.doCommand(cmdNum, args)
+                    result = self.doCommand(cmdNum, *args, sendTo=sendTo, protocol=self)
                 else:
                     self.msg(sendTo, "command " + cmdList[0] + " not found")
 
