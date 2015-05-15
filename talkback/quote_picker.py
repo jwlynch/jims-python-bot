@@ -33,6 +33,8 @@ class QuotePicker(commandtarget.CommandTarget):
 
         return result
 
+    # methods for this class (QuotePicker)
+
     def __init__(self, quotes_filename):
         """Initialize our QuotePicker class"""
         with open(quotes_filename) as quotes_file:
