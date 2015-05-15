@@ -25,7 +25,7 @@ class CommandTarget(object):
 #
 # commands = {"foo": cmdFoo, "bar": cmdBar}
 #
-# then, the suggested code for searchCommand will pick them up. use the symbolic names in doCommsnd().
+# then, searchCommand will pick them up. use the symbolic names in doCommsnd().
 #
 # another possibility, if there are no commands in this class, set commands to empty hash:
 #
