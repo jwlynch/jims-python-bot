@@ -5,6 +5,7 @@ from twisted.python import log
 from twisted.words.protocols import irc
 
 from utils import commandtarget
+from quote_picker import QuotePicker
 
 class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
     # overrides from IRCClient
@@ -13,6 +14,9 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
 
     def __init__(self):
         super(TalkBackBot, self).__init__()
+
+        self.quotepicker = QuotePicker("quotes.txt")
+        self.imYourNextTarget(self.quotepicker)
 
     def connectionMade(self):
         """Called when a connection is made."""
