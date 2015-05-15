@@ -16,11 +16,11 @@ class QuotePicker(commandtarget.CommandTarget):
         protocol = None
 
         if command == self.cmdQuote:
-            if "sendTo" in args:
-                sendTo = args["sendTo"]
+            if "sendTo" in kwargs:
+                sendTo = kwargs["sendTo"]
 
-                if "protocol" in args:
-                    protocol = args["protocol"]
+                if "protocol" in kwargs:
+                    protocol = kwargs["protocol"]
                     protocol.msg(sendTo, "command quote")
                     result = 0 # success
                 else:
