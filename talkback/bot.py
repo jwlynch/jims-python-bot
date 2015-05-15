@@ -7,29 +7,9 @@ from twisted.words.protocols import irc
 from utils import commandtarget
 
 class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
-
-    # overrides from CommandTarget
-
-    cmdQuote = 1
-    commands = {"quote": cmdQuote}
-
-    # return 0 on success
-    def doCommand(self, command, args):
-        result = None
-        sendTo = None
-
-        if command == self.cmdQuote:
-            if "sendTo" in args:
-                sendTo = args["sendTo"]
-                self.msg(sendTo, "command quote")
-                result = 0 # success
-        # elif test for other commands this class instance responds to
-        else:
-            result = super(TalkBackBot, self).doCommand(command, args)
-
-        return result
-
     # overrides from IRCClient
+
+    commands = {}
 
     def __init__(self):
         super(TalkBackBot, self).__init__()
