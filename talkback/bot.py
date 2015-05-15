@@ -8,9 +8,36 @@ from utils import commandtarget
 from quote_picker import QuotePicker
 
 class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
-    # overrides from IRCClient
+    # overrides from CommandTarget
 
-    commands = {}
+    cmdNames = 2
+    commands = {"names": cmdNames}
+
+    def doCommand(self, command, *args, **kwargs):
+        result = None
+        sendTo = None
+        protocol = None
+
+        if command == self.cmdNames:
+            if "sendTo" in kwargs:
+                sendTo = kwargs["sendTo"]
+
+                if "protocol" in kwargs:
+                    protocol = kwargs["protocol"]
+                    prefix = kwargs["prefix"]
+                    protocol.msg(sendTo, ", ".join(self.channelUsers[self.factory.channel]))
+                    result = 0 # success
+                else:
+                    pass # didn't get protocol from args
+            else:
+                pass # didn't get sendTo from args
+        # elif test for other commands this class instance responds to
+        else:
+            result = super(TalkBackBot, self).doCommand(command, *args, **kwargs)
+
+        return result
+
+    # overrides from IRCClient
 
     def __init__(self):
         super(TalkBackBot, self).__init__()
