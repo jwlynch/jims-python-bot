@@ -6,16 +6,15 @@ class QuotePicker(commandtarget.CommandTarget):
 
     # overrides from CommandTarget
 
-    cmdQuote = 1
-    commands = {"quote": cmdQuote}
+    cmdQuote = "quote"
 
     # return 0 on success
-    def doCommand(self, command, *args, **kwargs):
+    def doCommandStr(self, cmdString, *args, **kwargs):
         result = None
         sendTo = None
         protocol = None
 
-        if command == self.cmdQuote:
+        if cmdString == self.cmdQuote:
             if "sendTo" in kwargs:
                 sendTo = kwargs["sendTo"]
 
@@ -30,7 +29,7 @@ class QuotePicker(commandtarget.CommandTarget):
                 pass # didn't get sendTo from args
         # elif test for other commands this class instance responds to
         else:
-            result = super(TalkBackBot, self).doCommand(command, *args, **kwargs)
+            result = super(TalkBackBot, self).doCommandStr(cmdString, *args, **kwargs)
 
         return result
 

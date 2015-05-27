@@ -10,15 +10,14 @@ from quote_picker import QuotePicker
 class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
     # overrides from CommandTarget
 
-    cmdNames = 2
-    commands = {"names": cmdNames}
+    cmdNames = "names"
 
-    def doCommand(self, command, *args, **kwargs):
+    def doCommandStr(self, cmdString, *args, **kwargs):
         result = None
         sendTo = None
         protocol = None
 
-        if command == self.cmdNames:
+        if cmdString == self.cmdNames:
             if "sendTo" in kwargs:
                 sendTo = kwargs["sendTo"]
 
@@ -33,7 +32,7 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
                 pass # didn't get sendTo from args
         # elif test for other commands this class instance responds to
         else:
-            result = super(TalkBackBot, self).doCommand(command, *args, **kwargs)
+            result = super(TalkBackBot, self).doCommandStr(cmdString, *args, **kwargs)
 
         return result
 
@@ -112,11 +111,9 @@ class TalkBackBot(irc.IRCClient, commandtarget.CommandTarget):
                 if len(cmdList) > 1:
                     args = cmdList[1:]
 
-                cmdNum = self.searchCommand(cmdList[0])
+                result = self.doCommandStr(cmdList[0], *args, sendTo=sendTo, protocol=self, prefix=prefix)
 
-                if cmdNum is not None:
-                    result = self.doCommand(cmdNum, *args, sendTo=sendTo, protocol=self, prefix=prefix)
-                else:
+                if result is None:
                     self.msg(sendTo, "command " + cmdList[0] + " not found")
 
     def irc_RPL_NAMREPLY(self, prefix, params):
